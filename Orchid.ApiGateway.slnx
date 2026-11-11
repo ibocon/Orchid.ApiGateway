@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Orchid.ApiGateway.csproj" />
+  <Project Path="test/ArchitectureTests/Orchid.ApiGateway.ArchTests.csproj" />
+</Solution>
