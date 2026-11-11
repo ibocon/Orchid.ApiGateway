@@ -39,6 +39,19 @@ public sealed class ApiGatewayBoundaryTest
         appSettings.Should().Contain("\"PathRemovePrefix\": \"/orchid\"");
     }
 
+    [Fact]
+    public void AppSettingsShouldDeclareWebSubpathRouteAndWebCluster()
+    {
+        // Given
+        string repoRoot = FindRepositoryRoot();
+        string appSettings = File.ReadAllText(Path.Combine(repoRoot, "src/appsettings.json"));
+
+        // When & Then
+        appSettings.Should().Contain("\"web-subpath-route\"");
+        appSettings.Should().Contain("\"/orchid/{**catch-all}\"");
+        appSettings.Should().Contain("http://orchid-web-service:8080");
+    }
+
     private static string FindRepositoryRoot()
     {
         DirectoryInfo? dir = new(AppContext.BaseDirectory);
