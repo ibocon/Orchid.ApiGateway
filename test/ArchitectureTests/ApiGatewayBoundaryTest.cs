@@ -3,9 +3,9 @@ using FluentAssertions;
 using Orchid.ApiGateway.Middleware;
 using Xunit;
 
-namespace Orchid.ApiGateway.ArchTests;
+namespace Orchid.ApiGateway.ArchTest;
 
-public sealed class ApiGatewayBoundaryTests
+public sealed class ApiGatewayBoundaryTest
 {
     [Fact]
     public void ApiGatewayAssemblyShouldNotReferenceOtherOrchidAssemblies()

@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Orchid.ApiGateway.Middleware;
 using Xunit;
 
-namespace Orchid.UnitTests.Gateway;
+namespace Orchid.UnitTest.Gateway;
 
 /// <summary>
 /// <see cref="CorrelationIdMiddleware"/>??怨좎쑀 ?앸퀎??諛쒓툒 諛?湲곗〈 ?앸퀎???꾪뙆瑜?寃利앺븯???⑥쐞 ?뚯뒪?몄엯?덈떎.
 /// </summary>
-public sealed class CorrelationIdMiddlewareTests
+public sealed class CorrelationIdMiddlewareTest
 {
     [Fact]
     public async Task InvokeAsync_WhenHeaderMissing_ShouldGenerateAndAttachCorrelationId()
