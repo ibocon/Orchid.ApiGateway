@@ -11,11 +11,11 @@ namespace Orchid.UnitTest.Gateway;
 public sealed class CorrelationIdMiddlewareTest
 {
     [Fact]
-    public async Task InvokeAsync_WhenHeaderMissing_ShouldGenerateAndAttachCorrelationId()
+    public async Task GivenHeaderMissingWhenInvokedThenGeneratesAndAttachesCorrelationId()
     {
         // Given
-        var context = new DefaultHttpContext();
-        var middleware = new CorrelationIdMiddleware(next: (_) => Task.CompletedTask);
+        DefaultHttpContext context = new();
+        CorrelationIdMiddleware middleware = new(next: (_) => Task.CompletedTask);
 
         // When
         await middleware.InvokeAsync(context);
@@ -23,18 +23,19 @@ public sealed class CorrelationIdMiddlewareTest
         // Then
         context.Request.Headers.ContainsKey("X-Correlation-ID").Should().BeTrue();
         context.Response.Headers.ContainsKey("X-Correlation-ID").Should().BeTrue();
-        Guid.TryParse(context.Response.Headers["X-Correlation-ID"].ToString(), out _).Should().BeTrue();
+        bool parsed = Guid.TryParse(context.Response.Headers["X-Correlation-ID"].ToString(), out _);
+        parsed.Should().BeTrue();
     }
 
     [Fact]
-    public async Task InvokeAsync_WhenHeaderPresent_ShouldPreserveCorrelationId()
+    public async Task GivenHeaderPresentWhenInvokedThenPreservesCorrelationId()
     {
         // Given
         string existingId = "existing-custom-trace-id";
-        var context = new DefaultHttpContext();
+        DefaultHttpContext context = new();
         context.Request.Headers["X-Correlation-ID"] = existingId;
 
-        var middleware = new CorrelationIdMiddleware(next: (_) => Task.CompletedTask);
+        CorrelationIdMiddleware middleware = new(next: (_) => Task.CompletedTask);
 
         // When
         await middleware.InvokeAsync(context);
